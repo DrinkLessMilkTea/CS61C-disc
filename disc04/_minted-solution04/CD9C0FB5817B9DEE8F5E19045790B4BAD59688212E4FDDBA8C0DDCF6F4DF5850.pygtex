@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nl}{sum\PYGZus{}squares:}
+\PYG{n+nf}{beq}\PYG{+w}{ }\PYG{n+no}{a0}\PYG{+w}{ }\PYG{n+no}{x0}\PYG{+w}{ }\PYG{n+no}{zero\PYGZus{}case}
+\PYG{c+c1}{\PYGZsh{} To be implemented in the next question}
+\PYG{n+nf}{mv}\PYG{+w}{ }\PYG{n+no}{t0}\PYG{+w}{ }\PYG{n+no}{a0}
+\PYG{n+nf}{jal}\PYG{+w}{ }\PYG{n+no}{ra}\PYG{+w}{ }\PYG{n+no}{square}
+\PYG{n+nf}{add}\PYG{+w}{ }\PYG{n+no}{a1}\PYG{+w}{ }\PYG{n+no}{a0}\PYG{+w}{ }\PYG{n+no}{a1}
+\PYG{n+nf}{addi}\PYG{+w}{ }\PYG{n+no}{a0}\PYG{+w}{ }\PYG{n+no}{t0}\PYG{+w}{ }\PYG{l+m+mi}{\PYGZhy{}1}
+\PYG{n+nf}{jal}\PYG{+w}{ }\PYG{n+no}{ra}\PYG{+w}{ }\PYG{n+no}{sum\PYGZus{}squares}
+\PYG{n+nf}{jr}\PYG{+w}{ }\PYG{n+no}{ra}
+
+\PYG{n+nl}{zero\PYGZus{}case:}
+\PYG{n+nf}{mv}\PYG{+w}{ }\PYG{n+no}{a0}\PYG{+w}{ }\PYG{n+no}{a1}
+\PYG{n+nf}{jr}\PYG{+w}{ }\PYG{n+no}{ra}
+\end{Verbatim}

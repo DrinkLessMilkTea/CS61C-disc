@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kt}{char}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{srcptr}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{replaceptr}
+\end{Verbatim}

@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{+w}{  }\PYG{n+nf}{li}\PYG{+w}{ }\PYG{n+no}{s0}\PYG{+w}{ }\PYG{l+m+mi}{0}
+\PYG{+w}{  }\PYG{n+nf}{li}\PYG{+w}{ }\PYG{n+no}{s1}\PYG{+w}{ }\PYG{l+m+mi}{1}
+\PYG{+w}{  }\PYG{n+nf}{li}\PYG{+w}{ }\PYG{n+no}{s2}\PYG{+w}{ }\PYG{l+m+mi}{30}
+\PYG{n+nl}{LOOP:}
+\PYG{+w}{  }\PYG{n+nf}{beq}\PYG{+w}{ }\PYG{n+no}{s0}\PYG{+w}{ }\PYG{n+no}{s2}\PYG{+w}{ }\PYG{n+no}{EXIT}
+\PYG{+w}{  }\PYG{n+nf}{add}\PYG{+w}{ }\PYG{n+no}{s1}\PYG{+w}{ }\PYG{n+no}{s1}\PYG{+w}{ }\PYG{n+no}{s1}
+\PYG{+w}{  }\PYG{n+nf}{addi}\PYG{+w}{ }\PYG{n+no}{s0}\PYG{+w}{ }\PYG{n+no}{s0}\PYG{+w}{ }\PYG{l+m+mi}{1}
+\PYG{+w}{  }\PYG{n+nf}{j}\PYG{+w}{ }\PYG{n+no}{LOOP}
+\PYG{n+nl}{EXIT:}
+\end{Verbatim}
