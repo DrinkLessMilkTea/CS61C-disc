@@ -1,0 +1,185 @@
+\documentclass[UTF8,nofonts]{ctexart}
+\setCJKmainfont[BoldFont=LXGWWenKai-Medium,ItalicFont=LXGWWenKai-Light]{LXGWWenKai-Regular}
+\setCJKmonofont{Maple Mono CN}
+\usepackage{minted}
+\usepackage{amsmath}
+\title{Solution of Discussion03}
+\author{DrinkLessMilkTea}
+\date{\today}
+\begin{document}
+\maketitle
+\section{Floating Point}
+\subsection{}
+(a)
+\begin{align*}
+	8.25 = 0b1000.01 = 0b1.00001 * 2^{3} \\
+	S = 0                                \\
+	Exp = 3 + 127 = 130 = 0b10000010     \\
+	M = 0b00001                          \\
+	8.25 = 0b0100 0001 0000 010...0 = 0x41040000
+\end{align*}
+
+(b)
+\begin{align*}
+	39.5625 = 0b100111.1001 = 0b1.001111001 * 2^5 \\
+	S = 0                                         \\
+	Exp = 5 + 127 = 132 = 0b10000100              \\
+	M = 0b001111001                               \\
+	39.5625 = 0b 0100 0010 0001 1110 010...0 = 0x423E4000
+\end{align*}
+
+(c)
+\begin{align*}
+	0x00000F00 & = 0000 0000 0000 0000 0000 11110...0              \\ &= 0 00000000 0000000000011110...0 \\
+	S = 0                                                          \\
+	Exp = 0                                                        \\
+	M          & = 000 0000 0000 11110...0                         \\
+	0x00000F00 & = (-1)^0 \times 2^{-126} \times 0.000000000001111 \\ &= (2^{-12}+2^{-13}+2^{-14}+2^{-15}) \times 2^-{126}
+\end{align*}
+
+(d)
+\begin{align*}
+	0x00000000 = 0
+\end{align*}
+
+(e)
+\begin{align*}
+	0xFF94BEEF & = 0b 1 11111111 00101001011111011101111 \\
+	S          & = 0                                     \\
+	Exp        & = 0xFF                                  \\
+	M          & \neq 0                                  \\
+\end{align*}
+0xFF94BEEF is NaN
+
+(f)
+\begin{align*}
+	+\infty & = 0b0 11111111 00..0 \\
+	        & = 0x7F800000         \\
+	-\infty & = 0b1 11111111 00..0 \\
+	        & = 0xFF800000
+\end{align*}
+
+(g)
+$\frac{1}{3}$ 无法被准确表达, 只能近似表达
+
+\section{More Floating Point}
+\subsection{}
+$2 = (-1)^0 \times 0b1.0 \times 2^1 = 0b 0 10000000 0..0$, 即 Exp 为 128, M 为 0, 则最小步长为 $2^{-23}\times 2^1 = 2^{-22}$, 所以下一个大于二的最小正数为 $2+2^{-22}$
+
+\subsection{}
+同理,$4 = (-1)^0 \times 0b1.0 \times 2^2$, 即 Exp 为 129, M 为 0, 则最小步长为 $2^{-23} \times 2^2=2^{-21}$, 所以下一个大于 4 的最小正数为 $4 + 2^{-21}$
+
+\subsection{}
+当步长大于 $2^0$ 时, 之后的所有数都会是偶数, 因为之后的步长都为偶数, 所以最大的奇数是步长为 $2^0$ 的最后一步
+
+步长为 $2^0$, 即 $(Exp - 127) \times 2^{-23} = 0$, 所以得 Exp 为 150, 所以最大的奇数为 $(1 + (1-2^{-23}))\times 2^{23} = 2^{24} - 1$, 从 $2^{24}$ 开始之后的数都为偶数
+
+\section{RISC-V Instructions}
+\subsection{}
+
+已知寄存器 s0 保存的是数组的基地址
+
+(a) 这条指令将基地址后 12 字节按字加载到寄存器 t0 中, 12 字节对应三个整数, 所以是把下标为 3 的数组元素 4 加载到寄存器 t0 中
+
+(b) 这条指令将寄存器 t0 的值写入基地址后 16 字节, 即数组下标为 4 的位置, t0 的值为 4, 所以数组下标为 4 的元素更新为 4
+
+(c)
+首先是一条左移指令, 将 t0 中的数左移 2 位放入 t1 中, 此时 t0 为 4, 所以 t1 为 16
+
+然后是一条加法指令, 将 t1 和 s0 中的值相加后放入 t2, 此时 s0 为基地址, 则 t2 保存的是基地址后 16 个字节的地址, 即下标为 4 的数组元素的地址
+
+接着是加载指令, 将 t2 保存的地址加载到寄存器 t3 中, 此时 t3 为 4
+
+然后又是一条加法指令, t3 寄存器自增 1, t3 寄存器为 5
+
+然后是写入指令, 将 t3 寄存器的值写入 t2 指向的内存, 即数组下标为 4 的元素更新为 5
+
+(d)
+首先是一条加载指令, 将 s0 中的地址对应的字加载到 t0, 此时 t0 为 1
+
+然后是一条异或指令, 将 t0 和 0xFFF 异或后放入 t0, 即 0xFFF 和 0x1 异或, 结果为 0FFE
+
+最后是加法指令, t0 寄存器的值自增 1, 结果为 0xFFF
+
+\section{RISC-V Memory Access}
+\subsection{}
+t0: 0x00FF0004
+
+t1: 36
+
+t2: 0x0000000C
+
+s0: 0xDEADB33F
+
+s1: 0xFFFFFFC5
+
+\subsection{}
+
+0xF9120504: 0xABADCAF8
+
+0xBEEFDAB0: 0x00000000
+
+0xABADCAFC: 0x0504DAB0
+
+0xABADCAF8: 0xB0000400
+
+\section{Lost in Translation}
+\subsection{}
+\subsubsection*{}
+\begin{minted}{asm}
+  li s0 4
+  li s1 5
+  li s2 6
+  li s3 10
+  add s3 s3 s0
+  add s3 s3 s1
+  add s3 s3 s2
+\end{minted}
+
+\subsubsection*{}
+\begin{minted}{asm}
+ sw x0 0(s0)
+ li s1 2
+ sw s1 4(s0)
+ sw s1 8(s0)
+\end{minted}
+
+\subsubsection*{}
+\begin{minted}{asm}
+  li s0 5
+  li s1 10
+  add s2 s1 s1
+  bne s2 s1 ELSE
+  li s0 0
+  j EXIT
+ELSE:
+  sub s1 s0 1
+EXIT:
+  
+\end{minted}
+
+\subsubsection*{}
+\begin{minted}{asm}
+  li s0 0
+  li s1 1
+  li s2 30
+LOOP:
+  beq s0 s2 EXIT
+  add s1 s1 s1
+  addi s0 s0 1
+  j LOOP
+EXIT:
+\end{minted}
+
+\subsubsection*{}
+\begin{minted}{asm}
+  li s1 0
+LOOP:
+  bge x0 s0 EXIT
+  add s1 s1 s0
+  sub s0 s0 1
+  j LOOP
+EXIT:
+
+\end{minted}
+\end{document}
